@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import CoreBluetooth
+//import CoreBluetooth
 
 struct BLESensors {
     var availSensors: [BLESensor] = []
     
-    mutating func addscanner(scannerName:String,localName:String,rssi:Int,peripheral:CBPeripheral,uuid:UUID){
+    mutating func addscanner(scannerName:String,localName:String,rssi:Int,uuid:UUID){
         var matched : Bool = false
         for sensor in availSensors {
             if (sensor.scannerName == scannerName) &&
@@ -24,7 +24,6 @@ struct BLESensors {
             availSensors.append(BLESensor(scannerName:scannerName,
                                             localName:localName,
                                             rssi:rssi,
-                                            peripheral:peripheral,
                                             id:uuid))
 
         }
@@ -44,7 +43,7 @@ struct BLESensor: Identifiable {
     var scannerName: String
     var localName: String
     var rssi: Int
-    var peripheral: CBPeripheral
+    //var peripheral: CBPeripheral
     var id : UUID
     var data: [Int] = []
 }
