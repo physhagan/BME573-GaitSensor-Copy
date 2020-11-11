@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A78309325523F1D005BF555 /* BLEScannerVMcopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78309225523F1D005BF555 /* BLEScannerVMcopy.swift */; };
+		1A783096255241A7005BF555 /* FakeSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A783095255241A7005BF555 /* FakeSensors.swift */; };
 		1AD420E6254A3F9C009C2E9B /* GaitSensorUpdateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD420E5254A3F9C009C2E9B /* GaitSensorUpdateApp.swift */; };
 		1AD420E8254A3F9C009C2E9B /* BLEScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD420E7254A3F9C009C2E9B /* BLEScannerView.swift */; };
 		1AD420EA254A3F9E009C2E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AD420E9254A3F9E009C2E9B /* Assets.xcassets */; };
@@ -14,9 +16,12 @@
 		1AD420F7254B1C37009C2E9B /* BLEScanners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD420F6254B1C37009C2E9B /* BLEScanners.swift */; };
 		1AD420FA254B1C5E009C2E9B /* BLEScannerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD420F9254B1C5E009C2E9B /* BLEScannerVM.swift */; };
 		1AD420FD254B1C92009C2E9B /* DataHexEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD420FC254B1C92009C2E9B /* DataHexEncoding.swift */; };
+		1AE0889825534CED00A91221 /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE0889725534CED00A91221 /* FakeData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A78309225523F1D005BF555 /* BLEScannerVMcopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScannerVMcopy.swift; sourceTree = "<group>"; };
+		1A783095255241A7005BF555 /* FakeSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSensors.swift; sourceTree = "<group>"; };
 		1AD420E2254A3F9C009C2E9B /* GaitSensorUpdate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GaitSensorUpdate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AD420E5254A3F9C009C2E9B /* GaitSensorUpdateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaitSensorUpdateApp.swift; sourceTree = "<group>"; };
 		1AD420E7254A3F9C009C2E9B /* BLEScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScannerView.swift; sourceTree = "<group>"; };
@@ -26,6 +31,7 @@
 		1AD420F6254B1C37009C2E9B /* BLEScanners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScanners.swift; sourceTree = "<group>"; };
 		1AD420F9254B1C5E009C2E9B /* BLEScannerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEScannerVM.swift; sourceTree = "<group>"; };
 		1AD420FC254B1C92009C2E9B /* DataHexEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHexEncoding.swift; sourceTree = "<group>"; };
+		1AE0889725534CED00A91221 /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,9 @@
 				1AD420E5254A3F9C009C2E9B /* GaitSensorUpdateApp.swift */,
 				1AD420F6254B1C37009C2E9B /* BLEScanners.swift */,
 				1AD420E7254A3F9C009C2E9B /* BLEScannerView.swift */,
+				1A783095255241A7005BF555 /* FakeSensors.swift */,
+				1AE0889725534CED00A91221 /* FakeData.swift */,
+				1A78309225523F1D005BF555 /* BLEScannerVMcopy.swift */,
 				1AD420F9254B1C5E009C2E9B /* BLEScannerVM.swift */,
 				1AD420FC254B1C92009C2E9B /* DataHexEncoding.swift */,
 				1AD420E9254A3F9E009C2E9B /* Assets.xcassets */,
@@ -149,9 +158,12 @@
 			files = (
 				1AD420E8254A3F9C009C2E9B /* BLEScannerView.swift in Sources */,
 				1AD420FD254B1C92009C2E9B /* DataHexEncoding.swift in Sources */,
+				1AE0889825534CED00A91221 /* FakeData.swift in Sources */,
 				1AD420FA254B1C5E009C2E9B /* BLEScannerVM.swift in Sources */,
 				1AD420E6254A3F9C009C2E9B /* GaitSensorUpdateApp.swift in Sources */,
+				1A78309325523F1D005BF555 /* BLEScannerVMcopy.swift in Sources */,
 				1AD420F7254B1C37009C2E9B /* BLEScanners.swift in Sources */,
+				1A783096255241A7005BF555 /* FakeSensors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
