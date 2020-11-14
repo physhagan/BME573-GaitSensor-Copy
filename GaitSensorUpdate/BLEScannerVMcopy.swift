@@ -41,7 +41,16 @@ class BLEScannerVM: ObservableObject {
     // MARK: - Intents
     func scan() {
         print("scanning...")
-        scannerdata.addscanner(scannerName: "fakeSensor-1", localName: "fakeSensor-1", rssi: 573, uuid: UUID())
+        scannerdata.addscanner(scannerName: fakeSensorDictionary["Ball Sensor"]!.scannerName,
+                               localName: fakeSensorDictionary["Ball Sensor"]!.localName,
+                               rssi: fakeSensorDictionary["Ball Sensor"]!.rssi,
+                               uuid: fakeSensorDictionary["Ball Sensor"]!.id)
+        
+        scannerdata.addscanner(scannerName: fakeSensorDictionary["Heel Sensor"]!.scannerName,
+                               localName: fakeSensorDictionary["Heel Sensor"]!.localName,
+                               rssi: fakeSensorDictionary["Heel Sensor"]!.rssi,
+                               uuid: fakeSensorDictionary["Heel Sensor"]!.id)
+// Cutting out the bluetooth dependence:
 //        if centralManager.state == .poweredOn {
 //            centralManager.scanForPeripherals(withServices: [], options: nil)
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -64,14 +73,30 @@ class BLEScannerVM: ObservableObject {
 //
 //        var first: Bool = true
 //        var sensorValue: Int = 0
-
-        let characteristic = fakeData
-        print(characteristic[0..<9])//.hexEncodedString())
-        let values = characteristic
+        if peripheral.localName == "Ball Sensor" {
+            let characteristic = fakeData
+            
+            let values = characteristic
                 values.forEach { (digit) in
                     scannerdata.adddata(id: peripheral.id, sensorData: Int(digit))
                 }
-        //print("The sensor data is: \(peripheral.data[0..<9])")
+        }
+        
+        if peripheral.localName == "Heel Sensor" {
+            let characteristic = fakeData2
+            
+            let values = characteristic
+                values.forEach { (digit) in
+                    scannerdata.adddata(id: peripheral.id, sensorData: Int(digit))
+                }
+        }
+        
+        
+        //print(characteristic[0..<9])//.hexEncodedString())
+//        let values = characteristic
+//            values.forEach { (digit) in
+//                scannerdata.adddata(id: peripheral.id, sensorData: Int(digit))
+//            }
                     
                     //if first {
 //                        sensorValue = Int(digit)
@@ -82,7 +107,8 @@ class BLEScannerVM: ObservableObject {
 //                        first = true
 //                    }
                 
-            
+            // create a timer to start when you connect
+            // 
         
     }
     
@@ -92,23 +118,23 @@ class BLEScannerVM: ObservableObject {
     
     
     func disconnect(peripheral: BLESensor) {
-        //let dataString: String = ""
+        var dataString: String = ""
         print("disconnect...")
         //centralManager.cancelPeripheralConnection(peripheral.peripheral)
         //print("The sensor is: \(peripheral.data.count)")
         print("data count: not there yet")
-//        for dataPoint in peripheral.data {
-//            dataString = dataString + "\(dataPoint) \n"
-//        }
+        for dataPoint in peripheral.data {
+            dataString = dataString + "\(dataPoint) \n"
+        }
 
-//        let fileURL = URL(fileURLWithPath: "data", relativeTo: getDocumentsDirectory()).appendingPathExtension("txt")
-//        do {
-//            try dataString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-//            print("saving data...")
-//        } catch {
-//            print("something went wrong writing the data")
-//            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
-//        }
+        let fileURL = URL(fileURLWithPath: String(peripheral.localName), relativeTo: getDocumentsDirectory()).appendingPathExtension("txt")
+        do {
+            try dataString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+            print("saving data...")
+        } catch {
+            print("something went wrong writing the data")
+            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
+        }
     }
     
     func getDocumentsDirectory() -> URL {
