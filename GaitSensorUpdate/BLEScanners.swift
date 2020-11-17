@@ -37,7 +37,25 @@ struct BLESensors {
             }
         }
     }
+    
+//    mutating func appenddata(id: UUID, dataArray: [Int]){
+//        for (i,sensor) in availSensors.enumerated() {
+//            if sensor
+//        }
+//    }
+    
+    
+    
 }
+
+//// change to 16 bit uuid
+
+// is it good to have scannerName and localName as the same thing?
+// for us this is the case, for products this would be different
+
+// should a total data array be put into the main model so that different "sets" of data can be appended at different times? if there are 2 sets of measurement in a day per say?
+// sensor, starting date, data, frequency when data was taken
+
 
 struct BLESensor: Identifiable {
     var scannerName: String
@@ -46,4 +64,5 @@ struct BLESensor: Identifiable {
     //var peripheral: CBPeripheral
     var id : UUID
     var data: [Int] = []
+    var totalDataArray: [Int] = []
 }

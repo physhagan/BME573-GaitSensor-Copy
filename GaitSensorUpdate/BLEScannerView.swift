@@ -86,10 +86,10 @@ struct BLEScannerView: View {
                                 start = 0
                             }
                             if lengthData>start {
-                            path.move(to: CGPoint(x: 0.0, y: geometry.size.height*(1.0-CGFloat(data[start])/4096)))
+                                path.move(to: CGPoint(x: 0.0, y: geometry.size.height*(1.0-CGFloat(data[start])/CGFloat(data.max()!))))
                             for i in start..<lengthData {
                                 path.addLine(to: CGPoint(x: CGFloat(i-start),
-                                                         y: geometry.size.height*(1.0-CGFloat(data[i])/4096)))
+                                                         y: geometry.size.height*(1.0-CGFloat(data[i])/CGFloat(data.max()!))))
                             }}
                         }.stroke().foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     }

@@ -12,6 +12,7 @@ import SwiftUI
 class BLEScannerVM: ObservableObject {
     
     @Published private var scannerdata: BLESensors = createBLESensors()
+            
     //var fakedatastruck:
     //var centralManager : CBCentralManager!
     
@@ -156,7 +157,7 @@ class BLEScannerVM: ObservableObject {
     
     
     
-    // This
+
 //    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
 //        print("\(peripheral.name ?? "nothing") rssi:\(RSSI)")
 //        print("local name: \(advertisementData["kCBAdvDataLocalName"] ?? "no local name")")
