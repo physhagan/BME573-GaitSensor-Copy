@@ -208,7 +208,7 @@ class BLEScannerVM: ObservableObject {
 //                    scannerdata.adddata(id: peripheral.identifier, sensorData: sensorValue)
 //                    first = true
 //                }
-//            }
+//            }              // talked about a 1 or 2 representing the datapoint associated with peripheral 1 or 2 when appending the data packets HERE
 //        }
 //    }
     

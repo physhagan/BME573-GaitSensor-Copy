@@ -38,9 +38,11 @@ struct BLESensors {
         }
     }
     
-//    mutating func appenddata(id: UUID, dataArray: [Int]){
+//    mutating func appendToGlobal(id: UUID, dataArray: [Int]){
 //        for (i,sensor) in availSensors.enumerated() {
-//            if sensor
+//            if sensor.id == id {
+//
+//            }
 //        }
 //    }
     
@@ -48,13 +50,35 @@ struct BLESensors {
     
 }
 
-//// change to 16 bit uuid
+
+
+
+
+
+
+//-----------------------------------------------------------------
+//// change to 16 bit uuid   6ce2
+
+
+
+// 2 functions add front and add back
+
+
+
 
 // is it good to have scannerName and localName as the same thing?
 // for us this is the case, for products this would be different
 
+// divide signal into 2 channels and display 2 channels
+
 // should a total data array be put into the main model so that different "sets" of data can be appended at different times? if there are 2 sets of measurement in a day per say?
 // sensor, starting date, data, frequency when data was taken
+
+// make global data array in declaration struct. append to it with mutating function
+
+
+// save the date and time of a total global array
+
 
 
 struct BLESensor: Identifiable {
@@ -64,5 +88,8 @@ struct BLESensor: Identifiable {
     //var peripheral: CBPeripheral
     var id : UUID
     var data: [Int] = []
-    var totalDataArray: [Int] = []
+    var front_foot_data: [Int] = []
+    var back_foot_data:[Int] = []
+    var totalDataFront: [Int] = []
+    var totalDataBack: [Int] = []
 }
