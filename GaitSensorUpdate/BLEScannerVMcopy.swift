@@ -30,27 +30,46 @@ class BLEScannerVM: ObservableObject {
         return scannerdata.availSensors
     }
     
-    func bledata(uuid:UUID) -> [Int] {
+//    func bledata(uuid:UUID) -> [Int] {
+//        for (i,sensor) in scannerdata.availSensors.enumerated() {
+//            if sensor.id == uuid {
+//               return scannerdata.availSensors[i].data
+//            }
+//        }
+//        return []
+//    }
+    
+    func bledataFront(uuid:UUID) -> [Int] {
         for (i,sensor) in scannerdata.availSensors.enumerated() {
             if sensor.id == uuid {
-               return scannerdata.availSensors[i].data
+               return scannerdata.availSensors[i].front_foot_data
             }
         }
         return []
     }
     
+    func bledataBack(uuid:UUID) -> [Int] {
+        for (i,sensor) in scannerdata.availSensors.enumerated() {
+            if sensor.id == uuid {
+               return scannerdata.availSensors[i].back_foot_data
+            }
+        }
+        return []
+    }
+    
+    
     // MARK: - Intents
     func scan() {
         print("scanning...")
-        scannerdata.addscanner(scannerName: fakeSensorDictionary["Ball Sensor"]!.scannerName,
-                               localName: fakeSensorDictionary["Ball Sensor"]!.localName,
-                               rssi: fakeSensorDictionary["Ball Sensor"]!.rssi,
-                               uuid: fakeSensorDictionary["Ball Sensor"]!.id)
+        scannerdata.addscanner(scannerName: fakeSensorDictionary["Sensor1"]!.scannerName,
+                               localName: fakeSensorDictionary["Sensor1"]!.localName,
+                               rssi: fakeSensorDictionary["Sensor1"]!.rssi,
+                               uuid: fakeSensorDictionary["Sensor1"]!.id)
         
-        scannerdata.addscanner(scannerName: fakeSensorDictionary["Heel Sensor"]!.scannerName,
-                               localName: fakeSensorDictionary["Heel Sensor"]!.localName,
-                               rssi: fakeSensorDictionary["Heel Sensor"]!.rssi,
-                               uuid: fakeSensorDictionary["Heel Sensor"]!.id)
+        scannerdata.addscanner(scannerName: fakeSensorDictionary["Sensor2"]!.scannerName,
+                               localName: fakeSensorDictionary["Sensor2"]!.localName,
+                               rssi: fakeSensorDictionary["Sensor2"]!.rssi,
+                               uuid: fakeSensorDictionary["Sensor2"]!.id)
 // Cutting out the bluetooth dependence:
 //        if centralManager.state == .poweredOn {
 //            centralManager.scanForPeripherals(withServices: [], options: nil)
@@ -68,27 +87,35 @@ class BLEScannerVM: ObservableObject {
     func connect(peripheral: BLESensor) {
 
         print("called connect...")
+        //let date = Date()
+        //print(date)
         //peripheral.peripheral.delegate = self
         //centralManager.connect(peripheral.peripheral, options:nil)
-        print("The peripheral is: \(peripheral)")
+        //print("The peripheral is: \(peripheral)")
 //
 //        var first: Bool = true
 //        var sensorValue: Int = 0
-        if peripheral.localName == "Ball Sensor" {
-            let characteristic = fakeData
+        if peripheral.scannerName == "Sensor1" {
+            //let characteristic1 = fakeData
+            //let characteristic2 = fakeData2
+            let values1 = fakeData
+            let values2 = fakeData2
             
-            let values = characteristic
-                values.forEach { (digit) in
-                    scannerdata.adddata(id: peripheral.id, sensorData: Int(digit))
+            values1.forEach { (digit) in
+                scannerdata.addFrontData(id: peripheral.id, sensorData: Int(digit))
                 }
+            
+            values2.forEach { digit in
+                scannerdata.addBackData(id: peripheral.id, sensorData: Int(digit))
+            }
         }
         
-        if peripheral.localName == "Heel Sensor" {
-            let characteristic = fakeData2
+        if peripheral.localName == "Sensor2" {
+            let characteristic2 = fakeData2
             
-            let values = characteristic
-                values.forEach { (digit) in
-                    scannerdata.adddata(id: peripheral.id, sensorData: Int(digit))
+            let values = characteristic2
+                values.forEach { digit in
+                    scannerdata.addBackData(id: peripheral.id, sensorData: Int(digit))
                 }
         }
         
@@ -121,14 +148,49 @@ class BLEScannerVM: ObservableObject {
     func disconnect(peripheral: BLESensor) {
         var dataString: String = ""
         print("disconnect...")
+        scannerdata.appendToGlobalFront(id: peripheral.id, dataArray: peripheral.front_foot_data)
+        scannerdata.appendToGlobalBack(id: peripheral.id, dataArray: peripheral.back_foot_data)
+        
         //centralManager.cancelPeripheralConnection(peripheral.peripheral)
-        //print("The sensor is: \(peripheral.data.count)")
-        print("data count: not there yet")
-        for dataPoint in peripheral.data {
-            dataString = dataString + "\(dataPoint) \n"
+        
+        // Append dataset to global array
+        //let dataList = peripheral.front_foot_data
+        
+        
+        // ------------------------------------------------------
+        // This is where Toe and Heel data gets saved to a string
+        dataString = dataString + "All Toe Data: (\(peripheral.totalDataFront.count) points)\n\nToe Data: (\(peripheral.front_foot_data.count) points) \n"
+        
+        
+        for dataPoint in peripheral.front_foot_data {
+            if dataPoint < peripheral.front_foot_data.count-2{
+                dataString = dataString + "\(dataPoint) \n"
+            }
+            else {
+                dataString = dataString + "\(dataPoint) \n"
+            }
         }
-
-        let fileURL = URL(fileURLWithPath: String(peripheral.localName), relativeTo: getDocumentsDirectory()).appendingPathExtension("txt")
+        dataString = dataString + "\n\nAll Heel Data: (\(peripheral.totalDataBack.count) points)\n\nHeel Data: (\(peripheral.back_foot_data.count) points) \n"
+        for dataPoint in peripheral.back_foot_data {
+            if dataPoint < peripheral.back_foot_data.count-2{
+                dataString = dataString + "\(dataPoint) \n"
+            }
+            else {
+                dataString = dataString + "\(dataPoint) \n"
+            }
+        }
+        print("\(dataString)")
+        // Acquiring the date/time info for the file header
+        let date = NSDate();
+        
+        let formatter = DateFormatter();
+        formatter.dateFormat = "MM-dd-yyyy HH:mm:ss";
+        formatter.timeZone = TimeZone(abbreviation: "EST");
+        let utcTimeZoneStr = formatter.string(from: date as Date);
+        let fileID = String(peripheral.localName)+"  "+utcTimeZoneStr
+        print("\(fileID)")
+        
+        let fileURL = URL(fileURLWithPath: fileID, relativeTo: getDocumentsDirectory()).appendingPathExtension("txt")
         do {
             try dataString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
             print("saving data...")
@@ -136,6 +198,9 @@ class BLEScannerVM: ObservableObject {
             print("something went wrong writing the data")
             // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
         }
+        //scannerdata.appendToGlobalFront(id: peripheral.id, dataArray: peripheral.front_foot_data)
+        //scannerdata.appendToGlobalBack(id: peripheral.id, dataArray: peripheral.back_foot_data)
+        
     }
     
     func getDocumentsDirectory() -> URL {

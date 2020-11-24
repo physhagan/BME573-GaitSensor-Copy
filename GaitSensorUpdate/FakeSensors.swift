@@ -10,13 +10,13 @@ import Foundation
 
 // MARK: - Fake Sensor Dictionary
 var fakeSensorDictionary: [String:BLESensor] =
-    ["Heel Sensor":BLESensor(scannerName: "Heel Sensor",
-                            localName: "Heel Sensor",
+    ["Sensor1":BLESensor(scannerName: "Sensor1",
+                            localName: "Foot-Data",
                             rssi: 573,
                             id: UUID()),
-     "Ball Sensor":BLESensor(scannerName: "Ball Sensor",
-                            localName: "Ball Sensor",
-                            rssi: 573,
+     "Sensor2":BLESensor(scannerName: "Sensor2",
+                            localName: "Pressure-Plate-Data",
+                            rssi: 582,
                             id: UUID())]
                                                 
 // MARK: - Fake Data

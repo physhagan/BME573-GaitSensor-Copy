@@ -29,23 +29,40 @@ struct BLESensors {
         }
     }
     
-    mutating func adddata(id: UUID, sensorData:Int) {
+    mutating func addFrontData(id: UUID, sensorData:Int) {
         for (i,sensor) in availSensors.enumerated() {
             if sensor.id == id {
-                availSensors[i].data.append(sensorData)
+                availSensors[i].front_foot_data.append(sensorData)
                 break
             }
         }
     }
     
-//    mutating func appendToGlobal(id: UUID, dataArray: [Int]){
-//        for (i,sensor) in availSensors.enumerated() {
-//            if sensor.id == id {
-//
-//            }
-//        }
-//    }
+    mutating func addBackData(id: UUID, sensorData:Int) {
+        for (i,sensor) in availSensors.enumerated() {
+            if sensor.id == id {
+                availSensors[i].back_foot_data.append(sensorData)
+                break
+            }
+        }
+    }
     
+    mutating func appendToGlobalFront(id: UUID, dataArray: [Int]){
+        for (i,sensor) in availSensors.enumerated() {
+            if sensor.id == id {
+                availSensors[i].totalDataFront.append(contentsOf: dataArray)
+
+            }
+        }
+    }
+    mutating func appendToGlobalBack(id: UUID, dataArray: [Int]){
+        for (i,sensor) in availSensors.enumerated() {
+            if sensor.id == id {
+                availSensors[i].totalDataBack.append(contentsOf: dataArray)
+
+            }
+        }
+    }
     
     
 }
@@ -61,23 +78,15 @@ struct BLESensors {
 
 
 
-// 2 functions add front and add back
+// 2 functions add front and add back (x)
 
 
-
-
-// is it good to have scannerName and localName as the same thing?
-// for us this is the case, for products this would be different
-
-// divide signal into 2 channels and display 2 channels
-
-// should a total data array be put into the main model so that different "sets" of data can be appended at different times? if there are 2 sets of measurement in a day per say?
-// sensor, starting date, data, frequency when data was taken
+// sensor, starting date, data, frequency when data was taken (x)
 
 // make global data array in declaration struct. append to it with mutating function
 
 
-// save the date and time of a total global array
+// save the date and time of a total global array (x)
 
 
 
@@ -87,7 +96,7 @@ struct BLESensor: Identifiable {
     var rssi: Int
     //var peripheral: CBPeripheral
     var id : UUID
-    var data: [Int] = []
+    //var data: [Int] = []
     var front_foot_data: [Int] = []
     var back_foot_data:[Int] = []
     var totalDataFront: [Int] = []

@@ -52,7 +52,7 @@ struct BLEScannerView: View {
         var vm:BLEScannerVM
         var body: some View {
             VStack{
-                Text("\(sensor.scannerName)")
+                Text("\(sensor.scannerName)").padding(20)
                 dataDisplay(sensor:sensor, vm:vm)
             }.onAppear() {
                 vm.connect(peripheral:sensor)
@@ -68,28 +68,59 @@ struct BLEScannerView: View {
         var vm:BLEScannerVM
         var body: some View {
             VStack{
+                Text("Front Foot")
                 GeometryReader { geometry in
+                    // sensor 1 data
                     ZStack{
-                        Rectangle().fill(Color(UIColor.systemBackground)).border(Color.white, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                        Rectangle().fill(Color(.white)).border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/).padding(0)
 
                         Path { path in
                             path.move(to: CGPoint(x: 0, y: geometry.size.height/2))
                             path.addLine(to: CGPoint(x: geometry.size.width,y: geometry.size.height/2))
-                        }.stroke().foregroundColor(.yellow)
+                        }.stroke().foregroundColor(.black)
 
                         Path { path in
-                            let data = vm.bledata(uuid: sensor.id)
+                            let FrontData = vm.bledataFront(uuid: sensor.id)
                             let width = Int(geometry.size.width)
-                            let lengthData = data.count
-                            var start = data.count - width
+                            let lengthData = FrontData.count
+                            var start = FrontData.count - width
                             if start < 0 {
                                 start = 0
                             }
                             if lengthData>start {
-                                path.move(to: CGPoint(x: 0.0, y: geometry.size.height*(1.0-CGFloat(data[start])/CGFloat(data.max()!))))
+                                path.move(to: CGPoint(x: 0.0, y: geometry.size.height*(1.0-CGFloat(FrontData[start])/CGFloat(FrontData.max()!))))
                             for i in start..<lengthData {
                                 path.addLine(to: CGPoint(x: CGFloat(i-start),
-                                                         y: geometry.size.height*(1.0-CGFloat(data[i])/CGFloat(data.max()!))))
+                                                         y: geometry.size.height*(1.0-CGFloat(FrontData[i])/CGFloat(FrontData.max()!))))
+                            }}
+                        }.stroke().foregroundColor(.red)
+                    }
+                }.padding()
+                // ------------------------------------------------------------------------------------
+                Text("Back Foot")
+                GeometryReader { geometry in
+                    // sensor 2 data
+                    ZStack{
+                        Rectangle().fill(Color(.white)).border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/).padding(0)
+
+                        Path { path in
+                            path.move(to: CGPoint(x: 0, y: geometry.size.height/2))
+                            path.addLine(to: CGPoint(x: geometry.size.width,y: geometry.size.height/2))
+                        }.stroke().foregroundColor(.black)
+
+                        Path { path in
+                            let BackData = vm.bledataBack(uuid: sensor.id)
+                            let width = Int(geometry.size.width)
+                            let lengthData = BackData.count
+                            var start = BackData.count - width
+                            if start < 0 {
+                                start = 0
+                            }
+                            if lengthData>start {
+                                path.move(to: CGPoint(x: 0.0, y: geometry.size.height*(1.0-CGFloat(BackData[start])/CGFloat(BackData.max()!))))
+                            for i in start..<lengthData {
+                                path.addLine(to: CGPoint(x: CGFloat(i-start),
+                                                         y: geometry.size.height*(1.0-CGFloat(BackData[i])/CGFloat(BackData.max()!))))
                             }}
                         }.stroke().foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     }
