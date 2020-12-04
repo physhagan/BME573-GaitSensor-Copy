@@ -278,6 +278,7 @@ class BLEScannerVM: ObservableObject {
 //    }
     
 //    let pressure_char_uuid = CBUUID(string:"5A8AC39C-0CE1-4212-8B46-D589BA126CE2")
+        //let pressure_char_uuid = CBUUID(string:"6CE2")
 //    let period_char_uuid = CBUUID(string:"F8BC0798-E447-4625-959F-CE6970B70ED1")
 //    let pressure_service_uuid = CBUUID(string:"573BC605-1C3C-4467-B4AA-44E0C6C6B410")
 
