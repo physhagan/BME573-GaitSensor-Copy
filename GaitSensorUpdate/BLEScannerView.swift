@@ -52,7 +52,7 @@ struct BLEScannerView: View {
         var vm:BLEScannerVM
         var body: some View {
             VStack{
-                Text("\(sensor.scannerName)").padding(20)
+                Text("\(sensor.localName)").padding(20)
                 dataDisplay(sensor:sensor, vm:vm)
             }.onAppear() {
                 vm.connect(peripheral:sensor)

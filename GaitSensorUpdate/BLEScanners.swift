@@ -29,38 +29,68 @@ struct BLESensors {
         }
     }
     
-    mutating func addFrontData(id: UUID, sensorData:Int) {
+    mutating func addFrontData(id: UUID, sensorData:Double) {
         for (i,sensor) in availSensors.enumerated() {
             if sensor.id == id {
                 availSensors[i].front_foot_data.append(sensorData)
-                break
             }
+            else{}
         }
     }
     
-    mutating func addBackData(id: UUID, sensorData:Int) {
+    mutating func addBackData(id: UUID, sensorData:Double) {
         for (i,sensor) in availSensors.enumerated() {
             if sensor.id == id {
                 availSensors[i].back_foot_data.append(sensorData)
+            }
+            else{}
+        }
+    }
+    
+    mutating func remToeData(id: UUID){
+        for (i,sensor) in availSensors.enumerated() {
+            if sensor.id == id {
+                print("Toe Before:")
+                print(availSensors[i].front_foot_data.count)
+                availSensors[i].front_foot_data.removeAll()
+                print("Toe After")
+                print(availSensors[i].front_foot_data.count)
+            break
+            }
+        }
+        
+    }
+    mutating func remHeelData(id: UUID){
+            for (i,sensor) in availSensors.enumerated() {
+                if sensor.id == id {
+                    print("Heel Before:")
+                    print(availSensors[i].back_foot_data.count)
+                    availSensors[i].back_foot_data.removeAll()
+                    print("Heel After:")
+                    print(availSensors[i].back_foot_data.count)
                 break
             }
         }
     }
     
-    mutating func appendToGlobalFront(id: UUID, dataArray: [Int]){
+    
+    mutating func appendToAllToe(id: UUID, dataArray: [Double]){
         for (i,sensor) in availSensors.enumerated() {
             if sensor.id == id {
                 availSensors[i].totalDataFront.append(contentsOf: dataArray)
-
+                print(availSensors[i].totalDataFront.count)
+            break
             }
         }
     }
-    mutating func appendToGlobalBack(id: UUID, dataArray: [Int]){
+    mutating func appendToAllHeel(id: UUID, dataArray: [Double]){
         for (i,sensor) in availSensors.enumerated() {
             if sensor.id == id {
                 availSensors[i].totalDataBack.append(contentsOf: dataArray)
-
+                print(availSensors[i].totalDataBack.count)
+            break
             }
+            else{}
         }
     }
     
@@ -97,8 +127,8 @@ struct BLESensor: Identifiable {
     //var peripheral: CBPeripheral
     var id : UUID
     //var data: [Int] = []
-    var front_foot_data: [Int] = []
-    var back_foot_data:[Int] = []
-    var totalDataFront: [Int] = []
-    var totalDataBack: [Int] = []
+    var front_foot_data: [Double] = []
+    var back_foot_data:[Double] = []
+    var totalDataFront: [Double] = []
+    var totalDataBack: [Double] = []
 }
